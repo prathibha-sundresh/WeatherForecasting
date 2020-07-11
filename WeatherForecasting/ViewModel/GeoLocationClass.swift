@@ -21,7 +21,6 @@ class GeoLocationClass: NSObject, CLLocationManagerDelegate {
     var dataDelegate : weatherForeCastingDataProtocol!
     
     func fetchCurrentLocation() {
-        
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
@@ -32,12 +31,12 @@ class GeoLocationClass: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location: CLLocation = manager.location else { return }
+        guard let location: CLLocation = locations.last else { return }
         fetchCityAndCountry(from: location) { city, country, error in
             guard let city = city, let country = country, error == nil else { return }
             self.locationManager.stopUpdatingLocation()
             self.locationManager.delegate = nil;
-             print(city + ", " + country)
+            print(city + ", " + country)
             self.callAPIToFetchWeatherForcasting(cityName: city)
         }
     }
@@ -56,21 +55,17 @@ class GeoLocationClass: NSObject, CLLocationManagerDelegate {
     
     func callAPIToFetchWeatherForcasting(cityName:String) {
         let api = kAPI_currentCity.replacingOccurrences(of: "{city_name}", with: cityName)
-                  UtilityClass.fetchWeatherForecastingData(url: URL(string: api)!, completion: {[weak self] (result) in
-                      guard let self = self else { return }
-                      switch result {
-                      case .success(let weatherForecasrtingData):
-                        print(weatherForecasrtingData)
-                           self.modelData = weatherForecasrtingData
-                           self.dataDelegate?.displayWeatherForeCastingData()
-                      case .failure(let error):
-                          print(error)
-                      }
-                  })
+        UtilityClass.fetchWeatherForecastingData(url: URL(string: api)!, completion: {[weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let weatherForecasrtingData):
+                print(weatherForecasrtingData)
+                self.modelData = weatherForecasrtingData
+                self.dataDelegate?.displayWeatherForeCastingData()
+            case .failure(let error):
+                print(error)
+            }
+        })
     }
-    
-    
-    
-    
     
 }

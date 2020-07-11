@@ -13,15 +13,16 @@ class WeatherForeCastingTableViewCell: UITableViewCell {
     @IBOutlet weak var temperature:UILabel!
     @IBOutlet weak var weatherDescription:UILabel!
     @IBOutlet weak var windSpeed:UILabel!
-
+    @IBOutlet weak var date:UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -29,7 +30,6 @@ class WeatherForeCastingTableViewCell: UITableViewCell {
         temperature.text! = "Temp Min: \(data.main.tempmin) , TempMax: \(data.main.tempmax)"
         weatherDescription.text! = "Description: \(data.weather[0].description)"
         windSpeed.text! = "WindSpeed: \(data.wind.speed)"
-        
+        date.text! = "Data: \(data.dttxt)"
     }
-
 }

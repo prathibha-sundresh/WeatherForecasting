@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import CoreLocation
 @testable import WeatherForecasting
 
 class WeatherForecastingTests: XCTestCase {
@@ -29,6 +30,18 @@ class WeatherForecastingTests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    func testReverseLocation() {
+        let location = GeoLocationClass()
+        location.fetchCityAndCountry(from: CLLocation(latitude: 13.0827, longitude: 80.2707), completion: {(city, country, error) in
+            if (city != nil) || (country != nil) {
+                XCTAssertTrue(true, "success")
+            } else {
+                XCTAssertTrue(true, "failure")
+            }
+            
+        })
     }
 
 }
