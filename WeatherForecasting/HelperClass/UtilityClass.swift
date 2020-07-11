@@ -30,6 +30,7 @@ class UtilityClass {
             
             do {
                 let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 decoder.dateDecodingStrategy = .millisecondsSince1970
                 let json = try decoder.decode(WeatherData.self, from: data)
                 completion(.success(json))
@@ -40,5 +41,28 @@ class UtilityClass {
             
         })
     }
-
+    
+    public static func fetchWeatherForecastingData(url: URL, completion: @escaping (Result<WeatherForeCastingForCurrentCityData,Error>) -> Void) {
+           UtilityClass.getData(url: url, completion: { data,response,error in
+               if let error = error {
+                   completion(.failure(error))
+                   return
+               }
+               
+               guard let data = data , error == nil else {
+                   return
+               }
+               
+               do {
+                   let decoder = JSONDecoder()
+                   decoder.dateDecodingStrategy = .millisecondsSince1970
+                   let json = try decoder.decode(WeatherForeCastingForCurrentCityData.self, from: data)
+                   completion(.success(json))
+                   
+               } catch let error {
+                   completion(.failure(error))
+               }
+               
+           })
+       }
 }

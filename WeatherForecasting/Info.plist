@@ -20,6 +20,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This will let your app access the location always</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This will let your app access location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This will let your app access current location</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
