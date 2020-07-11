@@ -22,15 +22,38 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         isLabelHidden(display: true)
         viewModel.dataDelegate = self
+        self.navigationItem.title = "Weather Forecasting"
     }
     
     @IBAction func fetchData() {
+        if cityNameTextField.text!.count == 0 { return }
         viewModel.fetchData(WithCityName: cityNameTextField.text!)
     }
+  
+    @IBAction func FetchCurrentLocation() {
+        performSegue(withIdentifier: "CuurentLocation", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //
+        segue.destination
+    }
+  
 
 }
 
 extension ViewController :weatherDataProtocol {
+    func HandleFailure() {
+         DispatchQueue.main.async() {
+            let alert = UIAlertController(title: "Alert", message: "There is some error occured for this city", preferredStyle: .alert)
+            let alertaction = UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+                
+            })
+            alert.addAction(alertaction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     func displayData() {
         DispatchQueue.main.async() {
             self.isLabelHidden(display: false)

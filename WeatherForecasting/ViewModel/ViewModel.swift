@@ -10,6 +10,7 @@ import Foundation
 
 protocol weatherDataProtocol {
     func displayData()
+    func HandleFailure()
 }
 
 class ViewModel : NSObject{
@@ -19,24 +20,15 @@ class ViewModel : NSObject{
     
     public func fetchData(WithCityName:String) {
         let api = kAPI.replacingOccurrences(of: "{city_name}", with: WithCityName)
-           UtilityClass.fetchData(url: URL(string: api)!, completion: {[weak self] (result) in
-               guard let self = self else { return }
-               switch result {
-               case .success(let weatherForecasrtingData):
-               
-                    self.modelData = weatherForecasrtingData
-                    self.dataDelegate?.displayData()
-//                } else {
-//                    print("failure")
-//                }
-                
-                  
-               case .failure(let error):
-                   print(error)
-               }
-           })
-       }
-    
-    
-    
+        UtilityClass.fetchData(url: URL(string: api)!, completion: {[weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let weatherForecasrtingData):
+                self.modelData = weatherForecasrtingData
+                self.dataDelegate?.displayData()
+            case .failure(_ ):
+                self.dataDelegate?.HandleFailure()
+            }
+        })
+    }
 }
