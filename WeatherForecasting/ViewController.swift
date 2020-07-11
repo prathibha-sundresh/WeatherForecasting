@@ -35,10 +35,7 @@ class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //
-        segue.destination
     }
-  
 
 }
 
@@ -61,7 +58,6 @@ extension ViewController :weatherDataProtocol {
             self.weatherDescriptionLabel.text = "Description: \(self.viewModel.modelData!.weather[0].description)"
             self.windSpeedLabel.text = "WindSpeed: \(self.viewModel.modelData!.wind.speed)"
         }
-        
     }
     
     func isLabelHidden(display:Bool) {

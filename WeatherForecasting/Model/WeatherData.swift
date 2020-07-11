@@ -11,13 +11,13 @@ import Foundation
 struct WeatherData :Codable {
     let coord : Coord
     let weather : [weather]
-    let base :String
-    let main:mains
+    let base : String
+    let main:Mains
     let visibility:Float
-    let wind:wind
-    let clouds:clouds
+    let wind:Wind
+    let clouds:Clouds
     let dt: Int
-    let sys:sys
+    let sys:Sys
     let timezone:Int
     let id:Int
     let name:String
@@ -37,6 +37,23 @@ struct WeatherData :Codable {
         case id = "id"
         case name = "name"
         case cod = "cod"
+    }
+    
+    init(from decoder: Decoder) throws{
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        coord = try container.decode(Coord.self, forKey: .coord)
+        weather = try container.decode(Array.self, forKey: .weather)
+        base = try container.decode(String.self, forKey: .base)
+        main = try container.decode(Mains.self, forKey: .main)
+        visibility = try container.decodeIfPresent(Float.self, forKey: .visibility) ?? 0
+        wind = try container.decode(Wind.self, forKey: .wind)
+        clouds = try container.decode(Clouds.self, forKey: .clouds)
+        dt = try container.decode(Int.self, forKey: .dt)
+        sys = try container.decode(Sys.self, forKey: .sys)
+        timezone = try container.decode(Int.self, forKey: .timezone)
+        id = try container.decode(Int.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        cod = try container.decode(Int.self, forKey: .cod)
     }
 }
 
@@ -64,7 +81,7 @@ struct weather :Codable {
     }
 }
 
-struct mains:Codable {
+struct Mains:Codable {
     let temp:Float
     let feelsLike:Float
     let tempmin:Float
@@ -82,7 +99,7 @@ struct mains:Codable {
     }
 }
 
-struct wind :Codable {
+struct Wind :Codable {
     let speed:Float
     let deg:Float
     
@@ -92,14 +109,14 @@ struct wind :Codable {
     }
 }
 
-struct clouds:Codable {
+struct Clouds:Codable {
     let all:Int
     enum CodingKeys: String, CodingKey {
         case all = "all"
     }
 }
 
-struct sys:Codable {
+struct Sys:Codable {
     let type:Int
     let id:Int
     let country:String
@@ -111,5 +128,15 @@ struct sys:Codable {
         case country = "country"
         case sunrise = "sunrise"
         case sunset = "sunset"
+    }
+    
+    init(from decoder: Decoder) throws{
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try (container.decodeIfPresent(Int.self, forKey: .type) ?? 0)
+        id = try container.decodeIfPresent(Int.self, forKey: .id) ?? 0
+        country = try container.decode(String.self, forKey: .country)
+        sunrise = try container.decode(Int.self, forKey: .sunrise)
+        sunset = try container.decode(Int.self, forKey: .sunset)
+        
     }
 }

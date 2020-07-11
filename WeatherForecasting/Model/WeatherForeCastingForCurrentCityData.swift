@@ -32,7 +32,6 @@ struct List :Codable {
     let wind:Wind
     let sys:sysFore
     let dttxt:String
-   
     
     enum CodingKeys: String, CodingKey {
         case dt = "dt"
@@ -59,7 +58,6 @@ struct sysFore:Codable {
     }
 }
 
-
 struct MainsNew : Codable {
     let temp:Float
     let feelsLike:Float
@@ -70,18 +68,18 @@ struct MainsNew : Codable {
     let seaLevel:Int
     let grndLevel:Int
     let tempKf:Float
-      
-       enum CodingKeys: String, CodingKey {
-            case temp = "temp"
-            case feelsLike = "feels_like"
-            case tempmin = "temp_min"
-            case tempmax = "temp_max"
-            case pressure = "pressure"
-            case humidity = "humidity"
-           case seaLevel = "sea_level"
-           case grndLevel = "grnd_level"
-           case tempKf = "temp_kf"
-       }
+    
+    enum CodingKeys: String, CodingKey {
+        case temp = "temp"
+        case feelsLike = "feels_like"
+        case tempmin = "temp_min"
+        case tempmax = "temp_max"
+        case pressure = "pressure"
+        case humidity = "humidity"
+        case seaLevel = "sea_level"
+        case grndLevel = "grnd_level"
+        case tempKf = "temp_kf"
+    }
 }
 
 struct CityForeCase :Codable {
@@ -103,6 +101,5 @@ struct CityForeCase :Codable {
         case timezone = "timezone"
         case sunrise = "sunrise"
         case sunset = "sunset"
-      
     }
 }

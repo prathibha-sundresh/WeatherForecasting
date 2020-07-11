@@ -10,7 +10,7 @@ import UIKit
 //import CoreLocation
 
 class CurrentLocationViewController: UIViewController {
-
+    
     var locationModel:GeoLocationClass!
     @IBOutlet weak var tableView:UITableView!
     
@@ -19,21 +19,17 @@ class CurrentLocationViewController: UIViewController {
         locationModel = GeoLocationClass()
         locationModel.fetchCurrentLocation()
         locationModel.dataDelegate = self
-
         // Do any additional setup after loading the view.
     }
-
 }
 
 extension CurrentLocationViewController: weatherForeCastingDataProtocol {
     func displayWeatherForeCastingData() {
-      DispatchQueue.main.async() {
-           self.tableView.reloadData()
-        self.navigationItem.title = self.locationModel.modelData!.city.name
-       }
+        DispatchQueue.main.async() {
+            self.tableView.reloadData()
+            self.navigationItem.title = self.locationModel.modelData!.city.name
+        }
     }
-    
-    
 }
 
 extension CurrentLocationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -46,18 +42,18 @@ extension CurrentLocationViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       if let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherForeCastingTableViewCellID") as? WeatherForeCastingTableViewCell {
-        cell.setUpView(data: locationModel.modelData!.list[indexPath.row])
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherForeCastingTableViewCellID") as? WeatherForeCastingTableViewCell {
+            cell.setUpView(data: locationModel.modelData!.list[indexPath.row])
             return cell
         } else {
             let  cell = WeatherForeCastingTableViewCell(style: .default, reuseIdentifier: "WeatherForeCastingTableViewCellID")
-         cell.setUpView(data: locationModel.modelData!.list[indexPath.row])
+            cell.setUpView(data: locationModel.modelData!.list[indexPath.row])
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 180
     }
     
 }
